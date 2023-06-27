@@ -1,10 +1,13 @@
 package com.example.w1.controller;
 
-import com.example.w1.dto.PostRequestDto;
-import com.example.w1.dto.PostResponseDto;
+import com.example.w1.dto.*;
 import com.example.w1.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/post")
@@ -18,29 +21,35 @@ public class PostController {
     }
 
     @PostMapping("")
-    public PostResponseDto createPost(PostRequestDto requestDto) {
-        System.out.println(requestDto.toString());
+    public PostResponseDto createPost(PostCreateDto requestDto) {
         return postService.createPost(requestDto);
     }
 
     @GetMapping("/{postId}")
-    public String getPost(@PathVariable Integer postId) {
-        return "";
+    public PostResponseDto getPost(@PathVariable Long postId) {
+        return postService.getPostById(postId);
     }
 
     @PatchMapping("/{postId}")
-    public String patchPost(@PathVariable Integer postId) {
-        return "";
+    public PostResponseDto patchPost(@PathVariable Long postId, PostUpdateDto requestDto) {
+        return postService.patchPost(postId, requestDto);
     }
 
     @DeleteMapping("/{postId}")
-    public String deletePost(@PathVariable Integer postId) {
-        return "";
+    public Long deletePost(@PathVariable Long postId, PostDeleteDto requestDto) {
+        return postService.deletePost(postId, requestDto);
     }
 
     @GetMapping("/all")
-    public String getAllPost() {
-        return "";
+    public List<PostResponseDto> getAllPost() {
+        return postService.getAllPost();
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ExceptionResponseDto> postPatchHandle(IllegalArgumentException e){
+        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+        ExceptionResponseDto response = new ExceptionResponseDto(httpStatus, e.getMessage());
+        return new ResponseEntity<>(response, httpStatus);
     }
 
 }
