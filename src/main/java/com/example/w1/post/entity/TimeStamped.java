@@ -1,4 +1,4 @@
-package com.example.w1.entity;
+package com.example.w1.post.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

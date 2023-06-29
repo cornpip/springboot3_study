@@ -1,6 +1,6 @@
-package com.example.w1.repository;
+package com.example.w1.post.repository;
 
-import com.example.w1.entity.Post;
+import com.example.w1.post.entity.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

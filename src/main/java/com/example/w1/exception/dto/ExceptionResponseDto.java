@@ -1,4 +1,4 @@
-package com.example.w1.dto;
+package com.example.w1.exception.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

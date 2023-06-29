@@ -1,15 +1,16 @@
-package com.example.w1.dto;
+package com.example.w1.post.dto;
 
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+@AllArgsConstructor
 @Getter
 @Setter
 @ToString
-public class PostCreateDto {
-    private String title;
+public class PostUserDto {
     private String username;
-    private String contents;
     private String password;
 }

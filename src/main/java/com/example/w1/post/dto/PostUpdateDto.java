@@ -1,4 +1,4 @@
-package com.example.w1.dto;
+package com.example.w1.post.dto;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,7 +1,8 @@
-package com.example.w1.controller;
+package com.example.w1.post.controller;
 
-import com.example.w1.dto.*;
-import com.example.w1.service.PostService;
+import com.example.w1.exception.dto.ExceptionResponseDto;
+import com.example.w1.post.dto.*;
+import com.example.w1.post.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +47,7 @@ public class PostController {
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ExceptionResponseDto> postPatchHandle(IllegalArgumentException e){
+    public ResponseEntity<ExceptionResponseDto> postExceptionHandler(IllegalArgumentException e){
         HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
         ExceptionResponseDto response = new ExceptionResponseDto(httpStatus, e.getMessage());
         return new ResponseEntity<>(response, httpStatus);

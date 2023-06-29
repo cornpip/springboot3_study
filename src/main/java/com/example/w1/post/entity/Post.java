@@ -1,7 +1,7 @@
-package com.example.w1.entity;
+package com.example.w1.post.entity;
 
-import com.example.w1.dto.PostCreateDto;
-import com.example.w1.dto.PostUpdateDto;
+import com.example.w1.post.dto.PostCreateDto;
+import com.example.w1.post.dto.PostUpdateDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +11,7 @@ import lombok.ToString;
 import java.util.Optional;
 
 @Entity
+@Table(name = "post")
 @Getter
 @Setter
 @ToString

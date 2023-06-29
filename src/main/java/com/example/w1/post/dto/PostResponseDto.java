@@ -1,12 +1,13 @@
-package com.example.w1.dto;
+package com.example.w1.post.dto;
 
-import com.example.w1.entity.Post;
+import com.example.w1.post.entity.Post;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 
 @Getter
 public class PostResponseDto {
+    private Long id;
     private String username;
     private String title;
     private String contents;
@@ -14,6 +15,7 @@ public class PostResponseDto {
     private LocalDateTime modifiedAt;
 
     public PostResponseDto(Post post){
+        this.id = post.getId();
         this.username = post.getUsername();
         this.title = post.getTitle();
         this.contents = post.getContents();

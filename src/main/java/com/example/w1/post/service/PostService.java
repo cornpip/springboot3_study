@@ -1,8 +1,8 @@
-package com.example.w1.service;
+package com.example.w1.post.service;
 
-import com.example.w1.dto.*;
-import com.example.w1.entity.Post;
-import com.example.w1.repository.PostRepository;
+import com.example.w1.post.dto.*;
+import com.example.w1.post.entity.Post;
+import com.example.w1.post.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
