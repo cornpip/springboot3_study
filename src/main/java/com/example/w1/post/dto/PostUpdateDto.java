@@ -8,14 +8,12 @@ import java.util.Optional;
 
 @Getter
 @Setter
-@ToString
+@ToString(callSuper = true)
 public class PostUpdateDto extends PostUserDto {
-    private String username;
-    private String password;
     private Optional<String> title;
     private Optional<String> contents;
 
-    PostUpdateDto(String username, String password){
+    public PostUpdateDto(String username, String password) {
         super(username, password);
     }
 }

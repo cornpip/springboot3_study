@@ -1,7 +1,7 @@
 package com.example.w1.auth.controller;
 
-import com.example.w1.auth.entity.UserRoleEnum;
 import com.example.w1.jwt.JwtUtil;
+import com.example.w1.user.entity.UserRoleEnum;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;

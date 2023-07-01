@@ -1,23 +1,26 @@
 package com.example.w1.post.controller;
 
-import com.example.w1.exception.dto.ExceptionResponseDto;
-import com.example.w1.post.dto.*;
+import com.example.w1.post.dto.PostCreateDto;
+import com.example.w1.post.dto.PostDeleteDto;
+import com.example.w1.post.dto.PostResponseDto;
+import com.example.w1.post.dto.PostUpdateDto;
 import com.example.w1.post.service.PostService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/post")
+@RequestMapping("/api/post")
 public class PostController {
 
     private final PostService postService;
 
     @Autowired
-    public PostController(PostService postService){
+    public PostController(PostService postService) {
         this.postService = postService;
     }
 
@@ -32,7 +35,10 @@ public class PostController {
     }
 
     @PatchMapping("/{postId}")
-    public PostResponseDto patchPost(@PathVariable Long postId, PostUpdateDto requestDto) {
+    public PostResponseDto patchPost(@PathVariable Long postId, @Valid PostUpdateDto requestDto, BindingResult bindingResult) {
+        List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+        if (fieldErrors.size() > 0) throw new IllegalArgumentException("Dto fail");
+//        System.out.println(requestDto);
         return postService.patchPost(postId, requestDto);
     }
 
@@ -44,13 +50,6 @@ public class PostController {
     @GetMapping("/all")
     public List<PostResponseDto> getAllPost() {
         return postService.getAllPost();
-    }
-
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ExceptionResponseDto> postExceptionHandler(IllegalArgumentException e){
-        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
-        ExceptionResponseDto response = new ExceptionResponseDto(httpStatus, e.getMessage());
-        return new ResponseEntity<>(response, httpStatus);
     }
 
 }

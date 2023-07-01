@@ -35,5 +35,4 @@ public class MemberService {
     private Member findMemberById(Long memberId) {
         return memberRepository.findById(memberId).orElseThrow(() -> new NullPointerException("해당 MemberId는 없습니다."));
     }
-
 }

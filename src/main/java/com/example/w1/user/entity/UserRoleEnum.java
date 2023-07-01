@@ -1,4 +1,4 @@
-package com.example.w1.auth.entity;
+package com.example.w1.user.entity;
 public enum UserRoleEnum {
     USER(Authority.USER),  // 사용자 권한
     ADMIN(Authority.ADMIN);  // 관리자 권한

@@ -33,14 +33,14 @@ public class Post extends TimeStamped {
     @Column(name = "password", nullable = false)
     private String password;
 
-    public Post(PostCreateDto requestDto) {
+    public Post(final PostCreateDto requestDto) {
         this.username = requestDto.getUsername();
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
         this.password = requestDto.getPassword();
     }
 
-    public void update(PostUpdateDto requestDto){
+    public void update(final PostUpdateDto requestDto){
         if(Optional.ofNullable(requestDto.getTitle()).isPresent()) setTitle(requestDto.getTitle().get());
         if(Optional.ofNullable(requestDto.getContents()).isPresent()) setContents(requestDto.getContents().get());
 //        System.out.println(this);

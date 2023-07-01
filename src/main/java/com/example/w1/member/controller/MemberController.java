@@ -22,22 +22,22 @@ public class MemberController {
     }
 
     @PostMapping("")
-    public MemberResponseDto createMember(MemberCreateDto memberCreateDto){
+    public MemberResponseDto createMember(MemberCreateDto memberCreateDto) {
         return memberService.createMember(memberCreateDto);
     }
 
-    @GetMapping("/{memberId}")
-    public MemberResponseDto getMember(@PathVariable Long memberId){
-        return memberService.getMember(memberId);
-    }
-
-    @GetMapping("/all")
-    public List<MemberResponseDto> getAllMember(){
+    @GetMapping("")
+    public List<MemberResponseDto> getAllMember() {
         return memberService.getAllMember();
     }
 
+    @GetMapping("/{memberId}")
+    public MemberResponseDto getMember(@PathVariable Long memberId) {
+        return memberService.getMember(memberId);
+    }
+
     @ExceptionHandler(NullPointerException.class)
-    public ResponseEntity<ExceptionResponseDto> memberExceptionHandler(NullPointerException e){
+    public ResponseEntity<ExceptionResponseDto> memberExceptionHandler(NullPointerException e) {
         HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
         ExceptionResponseDto response = new ExceptionResponseDto(httpStatus, e.getMessage());
         return new ResponseEntity<>(response, httpStatus);

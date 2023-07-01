@@ -1,6 +1,6 @@
 package com.example.w1.jwt;
 
-import com.example.w1.auth.entity.UserRoleEnum;
+import com.example.w1.user.entity.UserRoleEnum;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
