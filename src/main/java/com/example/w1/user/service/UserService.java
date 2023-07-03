@@ -43,7 +43,7 @@ public class UserService {
     }
 
     public String test() {
-        return "";
+        return "test work!";
     }
 
 }

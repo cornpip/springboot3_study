@@ -1,6 +1,7 @@
 package com.example.w1.config;
 
 import com.example.w1.jwt.JwtAuthenticationFilter;
+import com.example.w1.jwt.JwtAuthorizationFilter;
 import com.example.w1.jwt.JwtUtil;
 import com.example.w1.security.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,15 +39,20 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception{
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
 
     @Bean
-    public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception{
+    public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
         JwtAuthenticationFilter filter = new JwtAuthenticationFilter(jwtUtil);
         filter.setAuthenticationManager(authenticationManager(authenticationConfiguration));
         return filter;
+    }
+
+    @Bean
+    public JwtAuthorizationFilter jwtAuthorizationFilter() throws Exception {
+        return new JwtAuthorizationFilter(jwtUtil, userDetailsService);
     }
 
     @Bean
@@ -59,20 +65,13 @@ public class WebSecurityConfig {
         http.authorizeHttpRequests((authorizeHttpRequest) ->
                 authorizeHttpRequest
                         .requestMatchers("/api/user/signup").permitAll()
-                        .requestMatchers("/api/post/**").permitAll()
+                        .requestMatchers("/api/user/test2").permitAll()
                         .anyRequest().authenticated()
         );
 
-        http.formLogin((formLogin) ->
-                formLogin
-                        .loginProcessingUrl("/api/user/login")
-                        .permitAll()
-        );
 
+        http.addFilterBefore(jwtAuthorizationFilter(), JwtAuthenticationFilter.class);
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-//        filter에서 setFilterProcessesUrl하니까 혹시 싶었다.
-//        filter 위치 지정안하면 지정 filter 안들린다.
-//        DetailsService는 가는데 username 빈 스트링
 
         return http.build();
     }

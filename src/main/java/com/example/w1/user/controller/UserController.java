@@ -1,11 +1,13 @@
 package com.example.w1.user.controller;
 
 import com.example.w1.exception.util.ExceptionUtil;
+import com.example.w1.security.UserDetailsImpl;
 import com.example.w1.user.dto.UserResponseDto;
 import com.example.w1.user.dto.UserSignUpDto;
 import com.example.w1.user.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,13 +26,18 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public UserResponseDto signUpUser(@Valid UserSignUpDto requestDto, BindingResult bindingResult){
+    public UserResponseDto signUpUser(@Valid UserSignUpDto requestDto, BindingResult bindingResult) {
         ExceptionUtil.bindingResultHandle(bindingResult);
         return userService.signUpUser(requestDto);
     }
 
     @GetMapping("/test")
-    public String test(){
+    public String test() {
+        return userService.test();
+    }
+
+    @GetMapping("/test2")
+    public String test2(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return userService.test();
     }
 }
