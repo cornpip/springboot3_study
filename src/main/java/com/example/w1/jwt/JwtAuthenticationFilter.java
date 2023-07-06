@@ -5,7 +5,6 @@ import com.example.w1.security.UserDetailsImpl;
 import com.example.w1.user.entity.UserRoleEnum;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -56,9 +55,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         jwtUtil.addJwtToCookie(token, response);
     }
 
-    @Override
-    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-        log.info(failed.getMessage());
-        response.setStatus(401);
-    }
+    // config에서 AuthenticationEntryPoint handling 할거라면 처리X
+//    @Override
+//    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+//        log.info(failed.getMessage());
+//        response.setStatus(401);
+//    }
 }

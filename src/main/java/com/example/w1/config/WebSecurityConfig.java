@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -20,6 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig {
 
     private final JwtUtil jwtUtil;
@@ -56,6 +58,16 @@ public class WebSecurityConfig {
     }
 
     @Bean
+    public MyAccessDeniedHandler myAccessDeniedHandler() {
+        return new MyAccessDeniedHandler();
+    }
+
+    @Bean
+    public MyAuthenticationEntryPoint myAuthenticationEntryPoint() {
+        return new MyAuthenticationEntryPoint();
+    }
+
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf((csrf) -> csrf.disable());
 
@@ -66,6 +78,7 @@ public class WebSecurityConfig {
                 authorizeHttpRequest
                         .requestMatchers("/api/user/signup").permitAll()
                         .requestMatchers("/api/user/test2").permitAll()
+                        .requestMatchers("/api/user/test3").permitAll()
                         .anyRequest().authenticated()
         );
 
@@ -73,6 +86,13 @@ public class WebSecurityConfig {
         http.addFilterBefore(jwtAuthorizationFilter(), JwtAuthenticationFilter.class);
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
+        http.exceptionHandling((exceptionHandling) ->
+                exceptionHandling
+                        .authenticationEntryPoint(myAuthenticationEntryPoint())
+                        .accessDeniedHandler(myAccessDeniedHandler())
+        );
+
         return http.build();
     }
+
 }
